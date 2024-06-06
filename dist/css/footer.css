@@ -1,0 +1,33 @@
+@media (max-width: 768px) {
+    /* Ajustes para dispositivos móviles */
+    .container {
+        padding: 0 10px;
+    }
+    
+    .us-title {
+        font-size: 24px;
+    }
+
+    .first-paragraph {
+        flex-direction: column;
+        margin-top: 20px;
+    }
+
+    .us-paragraph {
+        margin-bottom: 20px;
+    }
+
+    .parent {
+        flex-direction: column;
+    }
+
+    .div1,
+    .div2 {
+        margin: 20px 0;
+    }
+
+    footer .container .col-md-3 {
+        flex-basis: 100%;
+        max-width: 100%;
+    }
+}

@@ -1,0 +1,77 @@
+body{
+    background-image: url(../../images/FondoBody.webp);
+}
+
+.first-paragraph {
+    display: flex;
+    font-family: "Montserrat", sans-serif;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: center;
+    margin: 1.5%;
+    text-align: justify;
+    background-color: #f9f9f9;
+    border-radius: 20px;
+    margin: 60px;
+}
+
+.us-paragraph 
+{
+    flex: 1; 
+    text-align: justify;
+    font-family: "Montserrat", sans-serif;
+    margin-left: 5%;
+    font-size: x-large;
+}
+
+.us-img {
+    float: right;
+    max-width: 100%;
+    margin: 4%;
+    margin-top: 4.5%;
+    margin-left: 8%;
+    border-radius: 10% 25%;
+}
+
+.mission {
+    font-family: "Montserrat", sans-serif;
+    font-size:xx-large;
+    margin-top: 5%;
+    margin-left: 6%;
+    justify-content: left;
+}
+
+#mission-paragraph {
+    font-family: "Montserrat", sans-serif;
+    margin: 5%;
+    text-align: justify;
+    font-size: x-large;
+}
+
+.vision {
+    font-family: "Montserrat", sans-serif;
+    font-size: xx-large;
+    text-align: center;
+    margin-right: 6%;
+    margin-left: -60%;
+    margin-top: 5%;
+}
+#vision-paragraph {
+    font-family: "Montserrat", sans-serif;
+    margin: 5%;
+    text-align: justify;
+    font-size: x-large;
+}
+
+.div1, .div2{
+    background-color: #f9f9f9;
+    border-radius: 20px;
+}
+
+.parent {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    grid-gap: 10px; /* Puedes ajustar el valor según necesites */
+    margin: 5%;
+    font-size: x-large;
+}

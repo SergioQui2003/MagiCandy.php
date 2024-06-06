@@ -1,0 +1,75 @@
+body{
+    background-image: url(../../images/FondoBody.webp);
+}
+
+.banner {
+    max-width: 100%;
+}
+.banner img {
+    width: 100%;
+    height: 50%;
+}
+
+/* FONDO DE LA PAGINA WEB */
+
+body {
+    background-image: url(../src/assets/img/FondoBody2.webp);
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: center center;
+    max-height: 1080px;
+}
+
+
+/*TEXTO PERSUASVO Y LOS 3 PRODUCTOS */
+
+.container {
+    max-width: 100%;
+}
+.persuasive-text {
+    font-size: 1em;
+    line-height: 1.8;
+    text-align: center;
+    margin-top: 20px;
+}
+
+/* LOS 3 PRIMEROS PRODUCTOS DE LA PAG INICIO */
+
+.container-products {
+    display: flex;
+    justify-content: space-around;
+    flex-wrap: wrap;
+}
+
+.container-products img {
+    width: 100%;
+    max-width: 330px;
+    height: auto;
+    margin-bottom: 20px;
+    border-radius: 10% 25%;
+}
+
+/*BONTON PARA VER MAS PRODUCTOS---REDICIONA A LA PAG PRODUCTOS*/
+
+.btn-see-more{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-left: 50%;
+    margin: auto;
+    width: 180px;
+    font-size: 1rem;
+    padding: 0.8em 2em;
+    background-color: #ffffff;
+    border: 3px solid #009fe3;
+    border-radius: 1em;
+    color: #fff;
+    font-weight: bolder;
+    transition: cubic-bezier(0.68, -0.55, 0.265, 1.55) 0.4s;
+    box-shadow: -5px 5px 0px 0px #1d71b8;
+    text-decoration: none;
+}
+
+button:hover {
+    transform: translate(5px, -5px);
+}
