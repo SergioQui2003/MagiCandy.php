@@ -22,7 +22,7 @@
         Lista de productos
       </h1>
       <ol class="breadcrumb">
-        <li><a href="home.php"><i class="fa fa-dashboard"></i> Casa</a></li>
+        <li><a href="home.php"><i class="fa fa-dashboard"></i> Inicio</a></li>
         <li>Productos</li>
         <li class="active">Lista de productos</li>
       </ol>
@@ -56,7 +56,9 @@
         <div class="col-xs-12">
           <div class="box">
             <div class="box-header with-border">
-              <a href="#addnew" data-toggle="modal" class="btn btn-primary btn-sm btn-flat" id="addproduct"><i class="fa fa-plus"></i> Nuevo</a>
+            <a href="#addnew" data-toggle="modal" class="btn btn-sm btn-flat" id="addproduct" style="background-color: #009fe3; border-color: #1d71b8; color: #ffffff;">
+    <i class="fa fa-plus"></i> Nuevo
+</a>
               <div class="pull-right">
                 <form class="form-inline">
                   <div class="form-group">
