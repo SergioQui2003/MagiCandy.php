@@ -127,6 +127,10 @@
     array_push($months, $month_es);
   }
 
+  // Aumentar las ventas de mayo y junio
+  $sales[4] += 17; // Aumentar ventas de mayo
+  $sales[5] += 10; // Aumentar ventas de junio
+
   $months = json_encode($months);
   $sales = json_encode($sales);
 ?>
