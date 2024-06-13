@@ -37,34 +37,37 @@
 </div>
 
 <!-- Editar -->
+<!-- cart_modal.php -->
 <div class="modal fade" id="edit">
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
-              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                  <span aria-hidden="true">&times;</span></button>
-              <h4 class="modal-title"><b><span class="productname"></span></b></h4>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+                <h4 class="modal-title"><b>Editar Cantidad en Carrito</b></h4>
             </div>
             <div class="modal-body">
-              <form class="form-horizontal" method="POST" action="cart_edit.php">
-                <input type="hidden" class="cartid" name="cartid">
-                <input type="hidden" class="userid" name="userid">
-                <div class="form-group">
-                    <label for="edit_quantity" class="col-sm-3 control-label">Cantidad</label>
-
-                    <div class="col-sm-9">
-                      <input type="text" class="form-control" id="edit_quantity" name="quantity">
+                <form class="form-horizontal" method="POST" action="cart_update.php">
+                    <input type="hidden" class="cartid" name="cartid">
+                    <input type="hidden" class="userid" name="userid">
+                    <div class="form-group">
+                        <label for="edit_quantity" class="col-sm-3 control-label">Cantidad</label>
+                        <div class="col-sm-9">
+                            <input type="number" class="form-control" id="edit_quantity" name="quantity">
+                        </div>
                     </div>
-                </div>
-            </div>
-            <div class="modal-footer">
-              <button type="button" class="btn btn-default btn-flat pull-left" data-dismiss="modal"><i class="fa fa-close"></i> Cerrar</button>
-              <button type="submit" class="btn btn-success btn-flat" name="edit"><i class="fa fa-check-square-o"></i> Actualizar</button>
-              </form>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-default" data-dismiss="modal">Cerrar</button>
+                        <button type="submit" class="btn btn-primary" name="update">Actualizar Cantidad</button>
+                    </div>
+                </form>
             </div>
         </div>
     </div>
 </div>
+
+
 
 <!-- Borrar -->
 <div class="modal fade" id="delete">

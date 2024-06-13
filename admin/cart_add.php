@@ -1,35 +1,39 @@
 <?php
-	include 'includes/session.php';
+include 'includes/session.php';
 
-	if(isset($_POST['add'])){
-		$id = $_POST['id'];
-		$product = $_POST['product'];
-		$quantity = $_POST['quantity'];
+if(isset($_POST['add'])){
+    $id = $_POST['id'];
+    $product = $_POST['product'];
+    $quantity = $_POST['quantity'];
 
-		$conn = $pdo->open();
+    $conn = $pdo->open();
 
-		$stmt = $conn->prepare("SELECT *, COUNT(*) AS numrows FROM cart WHERE product_id=:id");
-		$stmt->execute(['id'=>$product]);
-		$row = $stmt->fetch();
+    try {
+        // Verificar si el producto ya está en el carrito
+        $stmt = $conn->prepare("SELECT * FROM cart WHERE user_id=:user AND product_id=:product");
+        $stmt->execute(['user'=>$id, 'product'=>$product]);
+        $row = $stmt->fetch();
 
-		if($row['numrows'] > 0){
-			$_SESSION['error'] = 'El producto existe en el carrito';
-		}
-		else{
-			try{
-				$stmt = $conn->prepare("INSERT INTO cart (user_id, product_id, quantity) VALUES (:user, :product, :quantity)");
-				$stmt->execute(['user'=>$id, 'product'=>$product, 'quantity'=>$quantity]);
+        if($row){
+            $_SESSION['error'] = 'El producto ya existe en el carrito';
+        } else {
+            // Agregar producto al carrito
+            $stmt = $conn->prepare("INSERT INTO cart (user_id, product_id, quantity) VALUES (:user, :product, :quantity)");
+            $stmt->execute(['user'=>$id, 'product'=>$product, 'quantity'=>$quantity]);
 
-				$_SESSION['success'] = 'Producto agregado al carrito';
-			}
-			catch(PDOException $e){
-				$_SESSION['error'] = $e->getMessage();
-			}
-		}
+            $_SESSION['success'] = 'Producto agregado al carrito';
 
-		$pdo->close();
+            // Actualizar cantidad vendida en la tabla de productos
+            $stmt = $conn->prepare("UPDATE products SET quantity_sold = quantity_sold + :quantity WHERE id = :product_id");
+            $stmt->execute(['quantity'=>$quantity, 'product_id'=>$product]);
+        }
+    } catch(PDOException $e){
+        $_SESSION['error'] = $e->getMessage();
+    }
 
-		header('location: cart.php?user='.$id);
-	}
+    $pdo->close();
+
+    header('location: cart.php?user='.$id);
+}
 
 ?>

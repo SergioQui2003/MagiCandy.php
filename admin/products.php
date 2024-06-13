@@ -22,7 +22,7 @@
         Lista de productos
       </h1>
       <ol class="breadcrumb">
-        <li><a href="home.php"><i class="fa fa-dashboard"></i> Inicio</a></li>
+        <li><a href="home.php"><i class="fa fa-home"></i> Inicio</a></li>
         <li>Productos</li>
         <li class="active">Lista de productos</li>
       </ol>
@@ -56,13 +56,13 @@
         <div class="col-xs-12">
           <div class="box">
             <div class="box-header with-border">
-            <a href="#addnew" data-toggle="modal" class="btn btn-sm btn-flat" id="addproduct" style="background-color: #009fe3; border-color: #1d71b8; color: #ffffff;">
-    <i class="fa fa-plus"></i> Nuevo
-</a>
+              <a href="#addnew" data-toggle="modal" class="btn btn-sm btn-flat" id="addproduct" style="background-color: #009fe3; border-color: #1d71b8; color: #ffffff;">
+                <i class="fa fa-plus"></i> Nuevo
+              </a>
               <div class="pull-right">
                 <form class="form-inline">
                   <div class="form-group">
-                    <label>Categoria: </label>
+                    <label>Categoría: </label>
                     <select class="form-control input-sm" id="select_category">
                       <option value="0">Todos</option>
                       <?php
@@ -88,12 +88,17 @@
             <div class="box-body">
               <table id="example1" class="table table-bordered">
                 <thead>
-                  <th>Nombre</th>
-                  <th>Foto</th>
-                  <th>Descripción</th>
-                  <th>Precio</th>
-                  <th>Vistas hoy</th>
-                  <th>Herramientas</th>
+                  <tr>
+                    <th>Nombre</th>
+                    <th>Foto</th>
+                    <th>Descripción</th>
+                    <th>Precio</th>
+                    <th>Vistas hoy</th>
+                    <th>Cantidad Entrada</th>
+                    <th>Cantidad Vendida</th>
+                    <th>Cantidad Disponible</th> <!-- Nueva columna -->
+                    <th>Herramientas</th>
+                  </tr>
                 </thead>
                 <tbody>
                   <?php
@@ -101,7 +106,7 @@
 
                     try{
                       $now = date('Y-m-d');
-                      $stmt = $conn->prepare("SELECT * FROM products $where");
+                      $stmt = $conn->prepare("SELECT *, (quantity_in - quantity_sold) as quantity_available FROM products $where");
                       $stmt->execute();
                       foreach($stmt as $row){
                         $image = (!empty($row['photo'])) ? '../images/'.$row['photo'] : '../images/noimage.jpg';
@@ -116,6 +121,9 @@
                             <td><a href='#description' data-toggle='modal' class='btn btn-info btn-sm btn-flat desc' data-id='".$row['id']."'><i class='fa fa-search'></i> Ver</a></td>
                             <td>$".number_format($row['price'], 0)."</td>
                             <td>".$counter."</td>
+                            <td>".$row['quantity_in']."</td>
+                            <td>".$row['quantity_sold']."</td>
+                            <td>".$row['quantity_available']."</td> <!-- Mostrar cantidad disponible -->
                             <td>
                               <button class='btn btn-success btn-sm edit btn-flat' data-id='".$row['id']."'><i class='fa fa-edit'></i> Editar</button>
                               <button class='btn btn-danger btn-sm delete btn-flat' data-id='".$row['id']."'><i class='fa fa-trash'></i> Eliminar</button>
