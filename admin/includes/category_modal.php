@@ -1,4 +1,4 @@
-<!-- Add -->
+<!-- Agregar -->
 <div class="modal fade" id="addnew">
     <div class="modal-dialog">
         <div class="modal-content">
@@ -27,7 +27,7 @@
     </div>
 </div>
 
-<!-- Edit -->
+<!-- Editar -->
 <div class="modal fade" id="edit">
     <div class="modal-dialog">
         <div class="modal-content">

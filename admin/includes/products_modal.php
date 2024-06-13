@@ -33,7 +33,7 @@
                     <div class="form-group">
                         <label for="name" class="col-sm-1 control-label">Nombre</label>
                         <div class="col-sm-5">
-                            <input type="text" class="form-control" id="name" name="name" required>
+                        <input type="text" class="form-control" id="name" name="name" required pattern="[A-Za-z\s]{4,15}" title="Solo texto y espacios. Min: 4, Max: 15">
                         </div>
                         <label for="category" class="col-sm-1 control-label">Categoría</label>
                         <div class="col-sm-5">
@@ -46,11 +46,11 @@
                     <div class="form-group">
                         <label for="price" class="col-sm-1 control-label">Precio</label>
                         <div class="col-sm-5">
-                            <input type="text" class="form-control" id="price" name="price" required>
+                        <input type="text" class="form-control" id="price" name="price" required pattern="(?!^0+$)^[1-9][0-9]{3,4}$" title="Debe ser un número de 4 a 5 dígitos, no puede empezar con 0 y no puede ser solo ceros">
                         </div>
                         <label for="quantity_in" class="col-sm-1 control-label">Cantidad Entrada</label>
                         <div class="col-sm-5">
-                            <input type="text" class="form-control" id="quantity_in" name="quantity_in" required>
+                        <input type="number" class="form-control" id="quantity_in" name="quantity_in" required min="50" max="3000" pattern="^[1-9][0-9]*$" title="Debe ser un número entre 50 y 3000, no puede empezar con 0 y no puede ser solo ceros">
                         </div>
                     </div>
                     <div class="form-group">
@@ -62,7 +62,7 @@
                     <p><b>Descripción</b></p>
                     <div class="form-group">
                         <div class="col-sm-12">
-                            <textarea id="editor1" name="description" rows="10" cols="80" required></textarea>
+                        <textarea id="editor1" name="description" rows="10" cols="80" required pattern="[A-Za-z\s]{20,70}" minlength="20" maxlength="70" title="Solo texto y espacios. Min: 20, Max: 70"></textarea>
                         </div>
                     </div>
             </div>
