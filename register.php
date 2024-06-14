@@ -15,8 +15,8 @@
 		$_SESSION['lastname'] = $lastname;
 		$_SESSION['email'] = $email;
 
-		/*
-		PARA QUE LLENE CORRECTAME EL RECAPCHAT
+		
+		// PARA QUE LLENE CORRECTAME EL RECAPCHAT
 		if(!isset($_SESSION['captcha'])){
 			require('recaptcha/src/autoload.php');		
 			$recaptcha = new \ReCaptcha\ReCaptcha('6LevO1IUAAAAAFCCiOHERRXjh3VrHa5oywciMKcw', new \ReCaptcha\RequestMethod\SocketPost());
@@ -31,7 +31,7 @@
 		  		$_SESSION['captcha'] = time() + (10*60);
 		  	}
 
-		} */
+		}
 
 		if($password != $repassword){
 			$_SESSION['error'] = 'Las contraseñas no coinciden';
