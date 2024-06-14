@@ -12,7 +12,7 @@
   }
 ?>
 <?php include 'includes/header.php'; ?>
-<body class="hold-transition register-page" style="background-color: #f4f6f9; display: flex; align-items: center; justify-content: center; height: 100vh;">
+<body class="hold-transition register-page" style="background-image: url('images/FondoBody.webp'); background-size: cover; display: flex; align-items: center; justify-content: center; height: 100vh;">
   <div class="register-box">
     <?php
       if(isset($_SESSION['error'])){
@@ -38,15 +38,15 @@
 
       <form action="register.php" method="POST">
         <div class="form-group has-feedback">
-        <input type="text" class="form-control" name="firstname" placeholder="Nombres" pattern="[A-Za-z]{3,}" title="Por favor, ingresa solo letras y al menos 5 caracteres" value="<?php echo (isset($_SESSION['firstname'])) ? $_SESSION['firstname'] : '' ?>" required>
+        <input type="text" class="form-control" name="firstname" placeholder="Nombres" pattern="[A-Za-z\s]{3,25}" title="Por favor, ingresa solo letras y espacios, con longitud entre 3 y 25 caracteres." value="<?php echo isset($_SESSION['firstname']) ? $_SESSION['firstname'] : ''; ?>" required>
           <span class="glyphicon glyphicon-user form-control-feedback"></span>
         </div>
         <div class="form-group has-feedback">
-        <input type="text" class="form-control" name="lastname" placeholder="Apellidos" pattern="[A-Za-z ]{8,}" title="Por favor, ingresa solo letras y al menos 8 caracteres" value="<?php echo (isset($_SESSION['lastname'])) ? $_SESSION['lastname'] : '' ?>" required>
+        <input type="text" class="form-control" name="lastname" placeholder="Apellidos" pattern="[A-Za-z\s]{4,25}" title="Por favor, ingresa solo letras y espacios, con longitud entre 4 y 25 caracteres." value="<?php echo isset($_SESSION['lastname']) ? $_SESSION['lastname'] : ''; ?>" required>
           <span class="glyphicon glyphicon-user form-control-feedback"></span>
         </div>
         <div class="form-group has-feedback">
-          <input type="email" class="form-control" name="email" placeholder="Correo electrónico" value="<?php echo (isset($_SESSION['email'])) ? $_SESSION['email'] : '' ?>" required>
+        <input type="email" class="form-control" name="email" placeholder="Correo electrónico" pattern="[a-zA-Z0-9._%+-]+@gmail\.com" title="Por favor, ingresa un correo electrónico de Gmail válido" value="<?php echo isset($_SESSION['email']) ? $_SESSION['email'] : ''; ?>" required>
           <span class="glyphicon glyphicon-envelope form-control-feedback"></span>
         </div>
         <div class="form-group has-feedback">

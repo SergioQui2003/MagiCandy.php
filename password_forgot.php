@@ -28,7 +28,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['reset'])) {
 }
 ?>
 
-<body class="hold-transition login-page">
+<body class="hold-transition login-page" style="background-image: url('images/FondoBody.webp'); background-size: cover; display: flex; justify-content: center; align-items: center; height: 100vh; margin: 20px 0;">
     <div class="login-box">
         <?php
         if(isset($_SESSION['error'])){
