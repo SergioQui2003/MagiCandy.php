@@ -1,6 +1,13 @@
 <?php
 include 'includes/session.php';
 include 'includes/header.php';
+
+// Vaciar el carrito si se presiona el botón de volver al carrito
+if (isset($_POST['vaciar_carrito'])) {
+    unset($_SESSION['cart']);
+    header('Location: cart_view.php'); // Redirigir al carrito después de vaciarlo
+    exit();
+}
 ?>
 
 <style>
@@ -22,6 +29,9 @@ include 'includes/header.php';
         position: absolute;
         top: 20px;
         right: 20px;
+    }
+    .volver-carrito-btn {
+        margin-top: 20px;
     }
 </style>
 
@@ -104,6 +114,9 @@ include 'includes/header.php';
                                     </table>
                                 </div>
                             </div>
+                            <!-- <form action="" method="post">
+                                <button type="submit" name="vaciar_carrito" class="btn btn-primary volver-carrito-btn">Volver al Carrito y Vaciar</button>
+                            </form> -->
                         </div>
                     </div>
                 </section>

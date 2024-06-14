@@ -3,9 +3,11 @@
 <body class="hold-transition skin-blue layout-top-nav">
 <div class="wrapper">
 
+
+
     <?php include 'includes/navbar.php'; ?>
-     
-      <div class="content-wrapper">
+
+    <div class="content-wrapper">
         <div class="container">
 
           <!-- Main content -->
@@ -30,25 +32,20 @@
                         </div>
                     </div>
                     <?php
-        if(isset($_SESSION['user'])){
-            echo "
-
-                <button id='btnPagar' class='btn btn-primary'>Pagar</button>
-            ";
-        }
-        else{
-            echo "
-                <h4>Necesitas <a href='login.php'>Iniciar sesión</a> para revisar.</h4>
-            ";
-        }
-    ?>
+                        if(isset($_SESSION['user'])){
+                            echo "<button id='btnPagar' class='btn btn-primary' disabled>Pagar</button>";
+                        }
+                        else{
+                            echo "<h4>Necesitas <a href='login.php'>Iniciar sesión</a> para revisar.</h4>";
+                        }
+                    ?>
                 </div>
                 <div class="col-sm-3">
                     <?php include 'includes/sidebar.php'; ?>
                 </div>
             </div>
           </section>
-         
+
         </div>
       </div>
     <?php $pdo->close(); ?>
@@ -131,8 +128,7 @@ $(function(){
     getTotal();
 
     $('#btnPagar').click(function(){
-        // Aquí puedes realizar la acción relacionada con el pago, como una redirección
-        window.location.href = 'factura.php'; // Cambia 'procesar_pago.php' por la URL de tu página de procesamiento de pago
+        window.location.href = 'factura.php';
     });
 
 });
@@ -145,6 +141,7 @@ function getDetails(){
         success: function(response){
             $('#tbody').html(response);
             getCart();
+            togglePagarButton();
         }
     });
 }
@@ -156,9 +153,19 @@ function getTotal(){
         dataType: 'json',
         success:function(response){
             total = response;
+            togglePagarButton();
         }
     });
 }
+
+function togglePagarButton(){
+    if(total > 0){
+        $('#btnPagar').prop('disabled', false);
+    } else {
+        $('#btnPagar').prop('disabled', true);
+    }
+}
+
 </script>
 </body>
 </html>

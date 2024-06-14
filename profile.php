@@ -1,13 +1,19 @@
-<?php include 'includes/session.php'; ?>
-<?php if(!isset($_SESSION['user'])): ?>
-    <?php header('location: index.php'); ?>
-<?php endif; ?>
-<?php include 'includes/header.php'; ?>
+<?php
+include 'includes/session.php';
+
+// Redirigir al inicio si el usuario no está autenticado
+if (!isset($_SESSION['user'])) {
+    header('Location: index.php');
+    exit();
+}
+
+include 'includes/header.php';
+?>
 
 <body class="hold-transition skin-blue layout-top-nav">
     <div class="wrapper">
         <?php include 'includes/navbar.php'; ?>
-        
+
         <div class="content-wrapper">
             <div class="container">
                 <!-- Contenido principal -->
@@ -30,6 +36,7 @@
 
                             <div class="box box-solid">
                                 <div class="box-body">
+                                    <!-- Mostrar detalles del usuario -->
                                     <div class="col-sm-3">
                                         <img src="<?php echo (!empty($user['photo'])) ? 'images/'.$user['photo'] : 'images/profile.jpg'; ?>" width="100%">
                                     </div>
@@ -61,48 +68,68 @@
                             </div>
                             <div class="box box-solid">
                                 <div class="box-header with-border">
-                                    <h4 class="box-title"><i class="fa fa-calendar"></i> <b>Historial de transacciones</b></h4>
+                                    <h4 class="box-title"><b>Productos comprados por última vez</b></h4>
                                 </div>
                                 <div class="box-body">
-                                    <table class="table table-bordered" id="example1">
+                                    <table class="table table-bordered" id="cartTable">
                                         <thead>
-                                            <th class="hidden"></th>
-                                            <th>Fecha</th>
-                                            <th>Transacción#</th>
+                                            <th>Nombre</th>
+                                            <th>Precio</th>
                                             <th>Cantidad</th>
-                                            <th>Detalles completos</th>
+                                            <th>Subtotal</th>
                                         </thead>
                                         <tbody>
                                             <?php
-                                                $conn = $pdo->open();
+                                            $conn = $pdo->open();
+                                            $totalCart = 0;
 
-                                                try{
-                                                    $stmt = $conn->prepare("SELECT * FROM sales WHERE user_id=:user_id ORDER BY sales_date DESC");
-                                                    $stmt->execute(['user_id'=>$user['id']]);
-                                                    foreach($stmt as $row){
-                                                        $stmt2 = $conn->prepare("SELECT * FROM details LEFT JOIN products ON products.id=details.product_id WHERE sales_id=:id");
-                                                        $stmt2->execute(['id'=>$row['id']]);
-                                                        $total = 0;
-                                                        foreach($stmt2 as $row2){
-                                                            $subtotal = $row2['price']*$row2['quantity'];
-                                                            $total += $subtotal;
-                                                        }
-                                                        echo "
-                                                            <tr>
-                                                                <td class='hidden'></td>
-                                                                <td>".date('M d, Y', strtotime($row['sales_date']))."</td>
-                                                                <td>".$row['pay_id']."</td>
-                                                                <td>&#36; ".number_format($total, 2)."</td>
-                                                                <td><button class='btn btn-sm btn-flat btn-info transact' data-id='".$row['id']."'><i class='fa fa-search'></i> Ver</button></td>
-                                                            </tr>
-                                                        ";
-                                                    }
+                                            try {
+                                                // Mostrar productos del carrito del usuario
+                                                $stmt = $conn->prepare("SELECT *, cart.id AS cartid FROM cart LEFT JOIN products ON products.id=cart.product_id WHERE user_id=:user_id");
+                                                $stmt->execute(['user_id' => $user['id']]);
+                                                
+                                                foreach ($stmt as $row) {
+                                                    $subtotal = $row['price'] * $row['quantity'];
+                                                    $totalCart += $subtotal;
+                                                    echo "
+                                                        <tr>
+                                                            <td>".$row['name']."</td>
+                                                            <td>&#36; ".number_format($row['price'], 2)."</td>
+                                                            <td>".$row['quantity']."</td>
+                                                            <td>&#36; ".number_format($subtotal, 2)."</td>
+                                                        </tr>
+                                                    ";
                                                 }
-                                                catch(PDOException $e){
-                                                    echo "Hay algún problema en la conexión.: " . $e->getMessage();
+                                                if ($stmt->rowCount() == 0) {
+                                                    echo "
+                                                        <tr>
+                                                            <td colspan='4' align='center'>No hay productos en el carrito</td>
+                                                        </tr>
+                                                    ";
+                                                } else {
+                                                    echo "
+                                                        <tr>
+                                                            <td colspan='3' align='right'><b>Total</b></td>
+                                                            <td><b>&#36; ".number_format($totalCart, 2)."</b></td>
+                                                        </tr>
+                                                    ";
                                                 }
+                                            } catch (PDOException $e) {
+                                                echo "Error: " . $e->getMessage();
+                                            }
 
-                                                $pdo->close();
+                                            // Mostrar fecha y número de factura
+                                            $numero_factura = mt_rand(100000, 999999); // Número de factura aleatorio
+                                            echo "<tr>
+                                                <td colspan='3' align='right'><b>Fecha de Factura</b></td>
+                                                <td>".date('d/m/Y')."</td>
+                                            </tr>";
+                                            echo "<tr>
+                                                <td colspan='3' align='right'><b>Número de Factura</b></td>
+                                                <td>$numero_factura</td>
+                                            </tr>";
+
+                                            $pdo->close();
                                             ?>
                                         </tbody>
                                     </table>
@@ -120,30 +147,5 @@
     </div>
 
     <?php include 'includes/scripts.php'; ?>
-    <script>
-    $(function(){
-        $(document).on('click', '.transact', function(e){
-            e.preventDefault();
-            $('#transaction').modal('show');
-            var id = $(this).data('id');
-            $.ajax({
-                type: 'POST',
-                url: 'transaction.php',
-                data: {id:id},
-                dataType: 'json',
-                success:function(response){
-                    $('#date').html(response.date);
-                    $('#transid').html(response.transaction);
-                    $('#detail').prepend(response.list);
-                    $('#total').html(response.total);
-                }
-            });
-        });
-
-        $("#transaction").on("hidden.bs.modal", function () {
-            $('.prepend_items').remove();
-        });
-    });
-    </script>
 </body>
 </html>
