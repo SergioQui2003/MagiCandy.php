@@ -17,7 +17,7 @@
 
 		
 		// PARA QUE LLENE CORRECTAME EL RECAPCHAT
-		if(!isset($_SESSION['captcha'])){
+		/* if(!isset($_SESSION['captcha'])){
 			require('recaptcha/src/autoload.php');		
 			$recaptcha = new \ReCaptcha\ReCaptcha('6LevO1IUAAAAAFCCiOHERRXjh3VrHa5oywciMKcw', new \ReCaptcha\RequestMethod\SocketPost());
 			$resp = $recaptcha->verify($_POST['g-recaptcha-response'], $_SERVER['REMOTE_ADDR']);
@@ -31,7 +31,7 @@
 		  		$_SESSION['captcha'] = time() + (10*60);
 		  	}
 
-		}
+		} */
 
 		if($password != $repassword){
 			$_SESSION['error'] = 'Las contraseñas no coinciden';
@@ -51,7 +51,7 @@
 				$now = date('Y-m-d');
 				$password = password_hash($password, PASSWORD_DEFAULT);
 
-				//generate code
+				//Generador de codigo
 				$set='123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ';
 				$code=substr(str_shuffle($set), 0, 12);
 
@@ -72,12 +72,12 @@
 					";
 
 
-					//Load phpmailer
+					//Cargar correo
 		    		require 'vendor/autoload.php';
 
 		    		$mail = new PHPMailer(true);                             
 				    try {
-				        //Server settings
+				        //Configuración servidor
 				        $mail->isSMTP();                                     
 				        $mail->Host = 'smtp.gmail.com';                      
 				        $mail->SMTPAuth = true;                               
