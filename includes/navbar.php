@@ -1,5 +1,5 @@
 <header class="main-header">
-  <nav class="navbar navbar-static-top bg-white">
+  <nav class="navbar navbar-static-top" style="background-color: #1d71b8;">
     <div class="container">
       <div class="navbar-header">
         <a href="index.php"><img class="logo" src="../images/Logo.webp" alt="Logo" height="70px" width="200px"></a>
